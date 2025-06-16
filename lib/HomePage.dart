@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,97 +37,100 @@ class _HomePageState extends State<HomePage> {
         //  appBar: AppBar(backgroundColor: Colors.indigo[900]),
 
         body: ListView(
-          children: [
-            GridView(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 4,
-                crossAxisSpacing: 10,
-                childAspectRatio: 0.8,
+            children: [
+              GridView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 3/2,
+                  ),
+                  children: [
+                    Align(
+                      child: Container(
+                        alignment: Alignment.center, //PARA CENTRALIZAR O CONTEUDO
+                        color: Colors.white,
+                        width: 150, // PARA AUMENTAR A LARGURA (ACONSELHO COLOCAR TODAS DO MESMO TAMANHO)
+                        height: 60, // PARA AUMENTAR O TAMANHO (ACONSELHO COLOCAR TODAS DO MESMO TAMANHO)
+                        child: Text(
+                          'QUIZ DA ROTINA',
+                          style: TextStyle(
+                            fontSize: 16, // PARA DIMINUIR A FONTE E FICAR PARECIDA COM A FOTO
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Align(
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 150,
+                        height: 60,
+                        color: Colors.white,
+                        child: Text(
+                          'INFORMAÇÕES',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      child: Container(
+                        padding: EdgeInsets.only(left: 6),
+                        alignment: Alignment.center,
+                        width: 150,
+                        height: 60,
+                        color: Colors.white,
+                        child: Text(
+                          'COLETÂNEA DE DADOS',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 150,
+                        height: 60,
+                        color: Colors.white,
+                        child: Text(
+                          'SOBRE NÓS',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
               ),
-              children: [
-                Align(
-                  child: Container(
-                    alignment: Alignment.center, //PARA CENTRALIZAR O CONTEUDO
-                    color: Colors.white,
-                    width: 150, // PARA AUMENTAR A LARGURA (ACONSELHO COLOCAR TODAS DO MESMO TAMANHO)
-                    height: 60, // PARA AUMENTAR O TAMANHO (ACONSELHO COLOCAR TODAS DO MESMO TAMANHO)
-                    child: Text(
-                      'QUIZ DA ROTINA',
-                      style: TextStyle(
-                        fontSize: 16, // PARA DIMINUIR A FONTE E FICAR PARECIDA COM A FOTO
-                        fontWeight: FontWeight.bold,
-                      ),
+              Divider(),
+              Align(
+                child: Container(
+                  padding: EdgeInsets.all(6),
+                  alignment: Alignment.topLeft,
+                  width: 350,
+                  height: 220,
+                  color: Colors.white,
+                  child: Text(
+                    'ÚLTIMAS NOTÍCIAS:',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-
-                Align(
-                  child: Container(
-                    alignment: Alignment.center,
-
-                    width: 150,
-                    height: 60,
-                    color: Colors.white,
-                    child: Text(
-                      'INFORMAÇÕES',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 45),
-                    color: Colors.white,
-                    child: Text(
-                      'COLETÂNEA DE DADOS',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 45),
-                    color: Colors.white,
-                    child: Text(
-                      'SOBRE NÓS',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 35),
-                    color: Colors.white,
-                    child: Text(
-                      'Últimas notícias:',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-
-              ],
-            ),
-          ],
+              ),
+            ]
         ),
-
       ),
     );
   }
