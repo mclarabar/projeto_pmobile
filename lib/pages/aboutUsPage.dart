@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../db/propriedades_dao.dart';
+import '../widget/card_propriedade.dart';
 
 class AboutUsPage extends StatefulWidget {
   const AboutUsPage({super.key});
@@ -8,6 +10,19 @@ class AboutUsPage extends StatefulWidget {
 }
 
 class _AboutUsPageState extends State<AboutUsPage> {
+  List listaPropriedades = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  loadData() async {
+    listaPropriedades = await PropriedadesDao().listarPropriedades();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -40,10 +55,10 @@ class _AboutUsPageState extends State<AboutUsPage> {
               child: Container(
                 height: 80,
                 width: 1000,
-
                 child: Row(
                   children: [
-                    Padding(padding: EdgeInsets.only(left: 14),
+                    Padding(
+                      padding: EdgeInsets.only(left: 14),
                       child: TextButton(
                         onPressed: () {},
                         child: Text(
@@ -52,7 +67,6 @@ class _AboutUsPageState extends State<AboutUsPage> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
                 decoration: BoxDecoration(
@@ -70,7 +84,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
           padding: const EdgeInsets.only(bottom: 16),
           child: Column(
             children: [
-              GridView(
+              GridView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -79,108 +93,14 @@ class _AboutUsPageState extends State<AboutUsPage> {
                   crossAxisSpacing: 16,
                   childAspectRatio: 0.9,
                 ),
-                children: [
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage:
-                          AssetImage('assets/images/Ezequiel.png'),
-                          radius: 80,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 8),
-                          color: Colors.white,
-                          child: Text(
-                            'José Ezequiel',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/Lara.png'),
-                          radius: 80,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 8),
-                          color: Colors.white,
-                          child: Text(
-                            'Lara Ivine',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage:
-                          AssetImage('assets/images/Clara.png'),
-                          radius: 80,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 8),
-                          color: Colors.white,
-                          child: Text(
-                            'Maria Clara',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage:
-                          AssetImage('assets/images/Karla.png'),
-                          radius: 80,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 8),
-                          color: Colors.white,
-                          child: Text(
-                            'Maria Karla',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                itemCount: listaPropriedades.length,
+                itemBuilder: (context, i) {
+                  return CardPropriedade(
+                    propriedade: listaPropriedades[i],
+                  );
+                },
               ),
+
               Flexible(
                 child: Container(
                   height: 200,
@@ -192,7 +112,6 @@ class _AboutUsPageState extends State<AboutUsPage> {
                     children: [
                       Text(
                         'INTUITO DO PROJETO:',
-
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
@@ -201,31 +120,28 @@ class _AboutUsPageState extends State<AboutUsPage> {
                       ),
                       Text(
                           ' Este aplicativo foi criado com o objetivo de oferecer suporte informativo, '
-                              'educativo e preventivo a pessoas que convivem com o câncer de pulmão, além '
-                              'de promover a conscientização sobre os riscos e formas de prevenção dessa '
-                              'doença. Unindo tecnologia, ciência e acessibilidade, a proposta é transformar '
-                              'o cuidado com a saúde em algo mais próximo, interativo e eficiente. Um dos '
-                              'principais destaques do aplicativo é a ferramenta interativa de rastreio, que '
-                              'une um quiz dinâmico com elementos de jogo. Nessa atividade, o usuário responde '
-                              'a perguntas relacionadas à sua rotina, hábitos de vida e histórico familiar. Conforme '
-                              'as respostas, o sistema identifica comportamentos de risco e os apresenta de forma '
-                              'visual e lúdica, permitindo que o usuário compreenda de maneira leve, mas clara, '
-                              'quais práticas podem favorecer ou prevenir o câncer de pulmão. O objetivo é promover '
-                              'a reflexão e incentivar mudanças positivas no dia a dia de forma natural e engajadora. '
-                              'Além disso, o aplicativo oferece um acervo completo de conteúdos informativos, com resumos '
-                              'explicativos, flashcards para fixação de informações, artigos científicos atualizados, '
-                              'vídeos educativos e outros formatos acessíveis. Esses materiais são voltados tanto para quem '
-                              'está em tratamento quanto para quem deseja aprender mais sobre o tema — familiares, estudantes, '
-                              'profissionais da saúde ou pessoas que buscam prevenção. Com uma abordagem acolhedora, interativa '
-                              'e baseada em evidências, o aplicativo busca empoderar os usuários por meio do conhecimento, auxiliando '
-                              'na compreensão do câncer de pulmão, promovendo hábitos saudáveis e contribuindo para o diagnóstico '
-                              'precoce e o enfrentamento da doença. A saúde começa com a informação — e esse é o primeiro passo que '
-                              'o aplicativo ajuda você a dar.',
-
+                          'educativo e preventivo a pessoas que convivem com o câncer de pulmão, além '
+                          'de promover a conscientização sobre os riscos e formas de prevenção dessa '
+                          'doença. Unindo tecnologia, ciência e acessibilidade, a proposta é transformar '
+                          'o cuidado com a saúde em algo mais próximo, interativo e eficiente. Um dos '
+                          'principais destaques do aplicativo é a ferramenta interativa de rastreio, que '
+                          'une um quiz dinâmico com elementos de jogo. Nessa atividade, o usuário responde '
+                          'a perguntas relacionadas à sua rotina, hábitos de vida e histórico familiar. Conforme '
+                          'as respostas, o sistema identifica comportamentos de risco e os apresenta de forma '
+                          'visual e lúdica, permitindo que o usuário compreenda de maneira leve, mas clara, '
+                          'quais práticas podem favorecer ou prevenir o câncer de pulmão. O objetivo é promover '
+                          'a reflexão e incentivar mudanças positivas no dia a dia de forma natural e engajadora. '
+                          'Além disso, o aplicativo oferece um acervo completo de conteúdos informativos, com resumos '
+                          'explicativos, flashcards para fixação de informações, artigos científicos atualizados, '
+                          'vídeos educativos e outros formatos acessíveis. Esses materiais são voltados tanto para quem '
+                          'está em tratamento quanto para quem deseja aprender mais sobre o tema — familiares, estudantes, '
+                          'profissionais da saúde ou pessoas que buscam prevenção. Com uma abordagem acolhedora, interativa '
+                          'e baseada em evidências, o aplicativo busca empoderar os usuários por meio do conhecimento, auxiliando '
+                          'na compreensão do câncer de pulmão, promovendo hábitos saudáveis e contribuindo para o diagnóstico '
+                          'precoce e o enfrentamento da doença. A saúde começa com a informação — e esse é o primeiro passo que '
+                          'o aplicativo ajuda você a dar.',
                           textAlign: TextAlign.justify,
-
-                          maxLines: 1000
-                      ),
+                          maxLines: 1000),
                     ],
                   ),
                 ),
