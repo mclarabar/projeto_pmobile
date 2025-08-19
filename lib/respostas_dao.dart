@@ -5,7 +5,7 @@ import 'package:zzc/respostas.dart';
 
 class RespostasDao{
   Future<void> salvarResposta(Resposta resposta) async{
-    final db = await DBHelper().database;//resolver problema
+    final db = await DBHelper().database;
     await db.insert(
       'Resposta',
       resposta.toJson(),

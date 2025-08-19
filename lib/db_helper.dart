@@ -3,17 +3,14 @@ import 'package:path/path.dart';
 
 
 class DBHelper {
-  // 1. Singleton implementation
   static final DBHelper _instance = DBHelper._internal();
   factory DBHelper() => _instance;
   DBHelper._internal();
 
 
-  // 2. Database instance
   static Database? _database;
 
 
-  // 3. Correct async getter
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDB();

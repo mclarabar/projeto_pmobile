@@ -1,27 +1,50 @@
 import 'package:flutter/material.dart';
-
+import 'package:zzc/db/respostas_dao.dart';
+import 'package:zzc/respostas.dart';
 
 class Quiz extends StatefulWidget {
   final int questaoId;
   final int usuarioId;
   const Quiz({super.key, required this.questaoId, required this.usuarioId});
 
-
   @override
-  State<Quiz> createState() => _HomePageState();
+  State<Quiz> createState() => _QuizState();
 }
 
-
-
-
-class _HomePageState extends State<Quiz> {
+class _QuizState extends State<Quiz> {
   int? opcaoSelecionada;
+  final RespostasDao _respostasDao = RespostasDao();
+
+  // Mapeamento de questões e opções
+  final Map<int, Map<String, dynamic>> _questoes = {
+    1: {
+      'pergunta': 'Como você classifica sua rotina de exercícios físicos?',
+      'opcoes': [
+        'Boa, pratico exercícios físicos regularmente',
+        'Regular, às vezes pratico exercícios físicos',
+        'Ruim, raramente pratico exercícios físicos',
+        'Não pratico exercícios físicos'
+      ]
+    },
+    // Adicione mais questões aqui:
+    2: {
+      'pergunta': 'Qual sua frequência de exercícios por semana?',
+      'opcoes': [
+        '5-7 vezes por semana',
+        '3-4 vezes por semana',
+        '1-2 vezes por semana',
+        'Nenhuma vez'
+      ]
+    }
+  };
+
   @override
   Widget build(BuildContext context) {
+    final questaoAtual = _questoes[widget.questaoId];
+    final bool isUltimaQuestao = widget.questaoId == _questoes.length;
+
     return SafeArea(
       child: Scaffold(
-
-
           appBar: AppBar(
             backgroundColor: Colors.indigo[900],
             title: Text(
@@ -29,10 +52,13 @@ class _HomePageState extends State<Quiz> {
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             actions: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.account_circle_rounded), color: Colors.white,),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.account_circle_rounded),
+                color: Colors.white,
+              ),
             ],
           ),
-
 
           bottomNavigationBar: Stack(
             children: [
@@ -49,16 +75,29 @@ class _HomePageState extends State<Quiz> {
                 child: Container(
                   height: 80,
                   width: 1000,
-
-
                   child: Row(
                     children: [
-                      Padding(padding: EdgeInsets.only(left: 14),
+                      Padding(
+                        padding: EdgeInsets.only(left: 14),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: _voltar,
                           child: Text(
                             '< Voltar',
                             style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: EdgeInsets.only(right: 14),
+                        child: TextButton(
+                          onPressed: opcaoSelecionada != null ? _proximaAcao : null,
+                          child: Text(
+                            isUltimaQuestao ? 'Finalizar' : 'Próxima >',
+                            style: TextStyle(
+                                color: opcaoSelecionada != null ? Colors.white : Colors.grey,
+                                fontSize: 20
+                            ),
                           ),
                         ),
                       ),
@@ -67,17 +106,17 @@ class _HomePageState extends State<Quiz> {
                   decoration: BoxDecoration(
                     color: Colors.indigo[900],
                     borderRadius: BorderRadius.vertical(
-                        bottom: Radius.elliptical(
-                            MediaQuery.of(context).size.width, 80.0)),
+                      bottom: Radius.elliptical(
+                          MediaQuery.of(context).size.width, 80.0
+                      ),
+                    ),
                   ),
                 ),
               ),
             ],
           ),
 
-
           backgroundColor: Colors.purple.shade200,
-
 
           body: Padding(
             padding: const EdgeInsets.all(15),
@@ -86,8 +125,7 @@ class _HomePageState extends State<Quiz> {
               color: Colors.white,
               child: ListView(
                 children: [
-
-
+                  // Cabeçalho com número da questão
                   Container(
                     margin: EdgeInsets.all(16),
                     color: Colors.purple.shade200,
@@ -99,82 +137,122 @@ class _HomePageState extends State<Quiz> {
                     ),
                   ),
 
-
+                  // Texto da pergunta
                   Container(
                     margin: EdgeInsets.all(16),
                     color: Colors.white,
                     child: Center(
                       child: Text(
-                        'Como você classifica sua rotina de exercícios físicos?',
+                        questaoAtual!['pergunta'],
                         style: TextStyle(color: Colors.black, fontSize: 25),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
 
-
-                  Container(
-                    margin: EdgeInsets.all(16),
-                    color: Colors.purple.shade200,
-                    child: Center(
-                      child: TextButton(
-                        onPressed: () { },
-                        child: Text(
-                          'Boa, pratico exercícios físicos regularmente',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ),
-                    ),
-                  ),
-
-
-                  Container(
-                    margin: EdgeInsets.all(16),
-                    color: Colors.purple.shade200,
-                    child: Center(
-                      child: TextButton(
-                        onPressed: () { },
-                        child: Text(
-                          'Regular, às vezes pratico exercícios físicos',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ),
-                    ),
-                  ),
-
-
-                  Container(
-                    margin: EdgeInsets.all(16),
-                    color: Colors.purple.shade200,
-                    child: Center(
-                      child: TextButton(
-                        onPressed: () { },
-                        child: Text(
-                          'Ruim, raramente pratico exercícios físicos',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ),
-                    ),
-                  ),
-
-
-                  Container(
-                    margin: EdgeInsets.all(16),
-                    color: Colors.purple.shade200,
-                    child: Center(
-                      child: TextButton(
-                        onPressed: () { },
-                        child: Text(
-                          'Não pratico exercícios físicos',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Opções de resposta como RadioListTiles
+                  ..._buildOpcoesResposta(questaoAtual['opcoes']),
                 ],
               ),
             ),
           )
       ),
     );
+  }
+
+  // Método para construir as opções de resposta
+  List<Widget> _buildOpcoesResposta(List<String> opcoes) {
+    return List.generate(opcoes.length, (index) {
+      return Container(
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: opcaoSelecionada == index + 1
+              ? Colors.indigo[700]
+              : Colors.purple.shade200,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: RadioListTile<int>(
+          title: Text(
+            opcoes[index],
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
+          value: index + 1, // Valores: 1, 2, 3, 4
+          groupValue: opcaoSelecionada,
+          onChanged: (value) {
+            setState(() {
+              opcaoSelecionada = value;
+            });
+          },
+          activeColor: Colors.white,
+          fillColor: MaterialStateProperty.all(Colors.white),
+        ),
+      );
+    });
+  }
+
+  // Método para salvar resposta e navegar
+  Future<void> _salvarRespostaENavegar() async {
+    if (opcaoSelecionada == null) return;
+
+    try {
+      // Salvar resposta no banco
+      final resposta = Resposta(
+        usuarioId: widget.usuarioId,
+        questaoId: widget.questaoId,
+        opcaoEscolhida: opcaoSelecionada!,
+      );
+
+      await _respostasDao.salvarResposta(resposta);
+
+      // Navegar para próxima tela
+      if (widget.questaoId < _questoes.length) {
+        // Próxima questão
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Quiz(
+              questaoId: widget.questaoId + 1,
+              usuarioId: widget.usuarioId,
+            ),
+          ),
+        );
+      } else {
+        // Tela final - você precisará criar esta tela
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TelaResultado(usuarioId: widget.usuarioId),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Erro ao salvar resposta: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao salvar resposta')),
+      );
+    }
+  }
+
+  void _proximaAcao() {
+    _salvarRespostaENavegar();
+  }
+
+  void _voltar() {
+    if (widget.questaoId > 1) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Quiz(
+            questaoId: widget.questaoId - 1,
+            usuarioId: widget.usuarioId,
+          ),
+        ),
+      );
+    } else {
+      Navigator.pop(context); // Volta para tela anterior
+    }
   }
 }

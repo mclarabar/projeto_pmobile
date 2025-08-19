@@ -4,7 +4,7 @@ import 'package:zzc/quiz.dart';
 void main(){
   runApp(
       MaterialApp(
-        home: Quiz(),
+        home: HomePage(),
         debugShowCheckedModeBanner: false,
       )
   );
