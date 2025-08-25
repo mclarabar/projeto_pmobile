@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_pmobile/HomePage.dart';
+import 'package:zzc/quiz.dart';
 
-void main() {
-  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: HomePage()));
+void main(){
+  runApp(
+      MaterialApp(
+        home: Quiz(questaoId: 1, usuarioId: 1),
+        debugShowCheckedModeBanner: false,
+      )
+  );
 }
