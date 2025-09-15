@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_tela03/db/db_helper.dart';
 import 'package:projeto_tela03/db/propriedades_dao.dart';
+import 'package:projeto_tela03/domain/propriedades.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,13 +22,29 @@ class _HomePageState extends State<HomePage> {
   loadData() async {
     await PropriedadesDao().listarPropriedades();
   }
-
+  @override
+  Widget build(BuildContext context){
+    return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: FutureBuilder(
+            future: futurePropriedades, 
+            builder: (context, snapshot){
+              if(snapshot.hasData){
+                List<Propriedade> listaPropriedades = snapshot.requireData;
+                return buildListView(listaPropriedades);
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Color(0xFF04168F),
+                ),
+              );
+            }
+        ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.deepPurpleAccent[100],
@@ -321,13 +338,11 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-
                     ],
                   ),
                 ),
                 ),
               ],
-
           ),
         ),
       ),

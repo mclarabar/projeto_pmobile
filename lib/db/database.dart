@@ -1,4 +1,5 @@
 import '../domain/propriedades.dart';
+
 class Database{
 static List propriedades = [
   Propriedade(
