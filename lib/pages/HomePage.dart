@@ -11,6 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  late Future<List<Propriedade>> futurePropriedades ;
+
   int selectedIndex = 0;
 
   @override
@@ -20,39 +23,40 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadData() async {
-    await PropriedadesDao().listarPropriedades();
-  }
-  @override
-  Widget build(BuildContext context){
-    return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder(
-            future: futurePropriedades, 
-            builder: (context, snapshot){
-              if(snapshot.hasData){
-                List<Propriedade> listaPropriedades = snapshot.requireData;
-                return buildListView(listaPropriedades);
-              }
-              return Center(
-                child: CircularProgressIndicator(
-                  color: Color(0xFF04168F),
-                ),
-              );
-            }
-        ),
-    );
+    futurePropriedades = PropriedadesDao().listarPropriedades();
+    // List<Propriedade> lista = await PropriedadesDao().listarPropriedades();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: FutureBuilder<List<Propriedade>>(
+        future: futurePropriedades,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Propriedade> listaPropriedades = snapshot.requireData;
+            return buildListView(listaPropriedades);
+          }
+
+          return Center(
+            child: CircularProgressIndicator(color: Color(0xFF04168F)),
+          );
+        },
+      ),
+    );
+  }
+
+  buildListView(listaPropriedades){
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.deepPurpleAccent[100],
+        backgroundColor: Color(0xFFC49CE8),
         appBar: AppBar(
           backgroundColor: Colors.indigo[900],
           title: Text(
             'INFORMAÇÕES SOBRE O CÂNCER',
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            style: TextStyle(color: Colors.white, fontSize: 18),
           ),
           actions: [
             IconButton(
@@ -62,20 +66,45 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        bottomNavigationBar: Container(
-          height: 90,
-          color: Colors.indigo[900],
-          child: Row(
-            children: [
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  '< Voltar',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+        bottomNavigationBar: Stack(
+          children: [
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(height: 45, color: Colors.indigo[900]),
+            ),
+            ClipOval(
+              child: Container(
+                height: 80,
+                width: 1000,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 14),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          '<Voltar',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                decoration: BoxDecoration(
+                  color: Colors.indigo[900],
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.elliptical(
+                      MediaQuery.of(context).size.width,
+                      80.00,
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.only(bottom: 16),
@@ -204,8 +233,8 @@ class _HomePageState extends State<HomePage> {
                         'HÁBITOS PREVENTIVOS: ',
                         maxLines: 100,
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(height: 15),
@@ -219,18 +248,14 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 'NÃO FUME',
                                 maxLines: 100,
-                                style: TextStyle(
-                                  fontSize: 20
-                                ),
+                                style: TextStyle(fontSize: 18),
                               ),
                             ],
                           ),
                           Text(
                             'O cigarro prejudica os pulmões, o coração e aumenta o risco de várias doenças.',
                             maxLines: 100,
-                            style: TextStyle(
-                                fontSize: 18
-                            ),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
@@ -245,18 +270,14 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 'EVITE EXPOSIÇÃO A POLUENTES',
                                 maxLines: 100,
-                                style: TextStyle(
-                                    fontSize: 19
-                                ),
+                                style: TextStyle(fontSize: 17),
                               ),
                             ],
                           ),
                           Text(
                             'A qualidade do ar influencia diretamente sua saúde respiratória.',
                             maxLines: 100,
-                            style: TextStyle(
-                                fontSize: 18
-                            ),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
@@ -271,18 +292,14 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 'ADOTE UMA DIETA SAUDÁVEL',
                                 maxLines: 100,
-                                style: TextStyle(
-                                    fontSize: 20
-                                ),
+                                style: TextStyle(fontSize: 18),
                               ),
                             ],
                           ),
                           Text(
                             'Prefira alimentos naturais, com menos gordura, sal e açúcar.',
                             maxLines: 100,
-                            style: TextStyle(
-                                fontSize: 18
-                            ),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
@@ -297,18 +314,14 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 'PRATIQUE ATIVIDADE FÍSICA',
                                 maxLines: 100,
-                                style: TextStyle(
-                                    fontSize: 20
-                                ),
+                                style: TextStyle(fontSize: 18),
                               ),
                             ],
                           ),
                           Text(
                             'Exercitar-se regularmente melhora o humor, a disposição e previne doenças.',
                             maxLines: 100,
-                            style: TextStyle(
-                                fontSize: 18
-                            ),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
@@ -323,26 +336,22 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 'FAÇA CONSULTAS MÉDICAS',
                                 maxLines: 100,
-                                style: TextStyle(
-                                    fontSize: 19
-                                ),
+                                style: TextStyle(fontSize: 18),
                               ),
                             ],
                           ),
                           Text(
                             'O acompanhamento profissional ajuda na prevenção e no diagnóstico precoce.',
                             maxLines: 100,
-                            style: TextStyle(
-                                fontSize: 18
-                            ),
+                            style: TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                ),
-              ],
+              ),
+            ],
           ),
         ),
       ),
