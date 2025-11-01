@@ -2,13 +2,13 @@ import 'package:dio/dio.dart';
 import '../domain/propriedades.dart';
 
 class PropriedadesApi{
-  final = dio = Dio();
+  final dio = Dio();
   final String baseUrl = 'https://my-json-server.typicode.com/Laraivine/fake-API';
 
   Future<List<Propriedade>> findAll() async{
     List<Propriedade> listaPropriedades = [];
 
-    final responde = await dio.get('$baseUrl/properties');
+    final response = await dio.get('$baseUrl/properties');
 
     if(response.statusCode == 200){
       var listResult = response.data;
