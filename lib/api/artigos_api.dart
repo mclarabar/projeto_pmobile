@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 
 class AddressApi{
   final dio = Dio();
-  String baseUrl = 'https://pubmed.ncbi.nlm.nih.gov/api/citmatch/?method=auto&journal=Front+Immunol&volume=13&page=826091&authors=Ihunwo+A';
+  String baseUrl = 'https://pubmed.ncbi.nlm.nih.gov/api/citmatch/';
 
   Future<Artigo> findByArtigos (String artigos) async {
     var result = await dio.get('$baseUrl/artigos/v2/$artigos');
