@@ -11,8 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  late Future<List<Propriedade>> futurePropriedades ;
+  late Future<List<Propriedade>> futurePropriedades;
 
   int selectedIndex = 0;
 
@@ -29,7 +28,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: FutureBuilder<List<Propriedade>>(
@@ -41,14 +39,14 @@ class _HomePageState extends State<HomePage> {
           }
 
           return Center(
-            child: CircularProgressIndicator(color: Color(0xFF04168F)),
+            child: CircularProgressIndicator(color: Color(0xFFFFFFFF)),
           );
         },
       ),
     );
   }
 
-  buildListView(listaPropriedades){
+  buildListView(listaPropriedades) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFC49CE8),
@@ -66,6 +64,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+
         bottomNavigationBar: Stack(
           children: [
             Positioned(
@@ -107,124 +106,47 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: Column(
+          padding: const EdgeInsets.only(left: 8),
+          child: ListView(
             children: [
-              GridView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 1,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 1,
+              SizedBox(
+                height: 150,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  children: [
+                    buildContainer(
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjsAt04QBFN0JfUZZOA-hooxvCfKaCUJ17pw&s',
+                      'Mapas Mentais',
+                    ),
+                    buildContainer(
+                      'https://gestorconcursos.com.br/wp-content/uploads/2020/10/resumo.png',
+                      'Resumos',
+                    ),
+
+                    buildContainer(
+                      'https://m.media-amazon.com/images/I/715eP7f8lOL.jpg',
+                      'Flashcards',
+                    ),
+
+                    buildContainer(
+                      'https://blog.even3.com.br/wp-content/uploads/2021/09/imagemdestaque_artigoscientificos.png',
+                      'Artigos',
+                    ),
+
+                    buildContainer(
+                      'https://cdn-icons-png.flaticon.com/512/235/235861.png',
+                      'Mapa',
+                    ),
+                  ],
                 ),
-
-                children: [
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjsAt04QBFN0JfUZZOA-hooxvCfKaCUJ17pw&s',
-                          ),
-                          radius: 60,
-                        ),
-                      ),
-
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          child: Text(
-                            'Mapas Mentais',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            'https://gestorconcursos.com.br/wp-content/uploads/2020/10/resumo.png',
-                          ),
-                          radius: 60,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          child: Text(
-                            'Resumos',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            'https://m.media-amazon.com/images/I/715eP7f8lOL.jpg',
-                          ),
-                          radius: 60,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          child: Text(
-                            'Resumos',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            'https://blog.even3.com.br/wp-content/uploads/2021/09/imagemdestaque_artigoscientificos.png',
-                          ),
-                          radius: 60,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          child: Text(
-                            'Artigos',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
               ),
+
               Flexible(
                 child: Container(
-                  height: 190,
-                  margin: EdgeInsets.all(16),
-                  padding: EdgeInsets.all(16),
+                  height: 480,
+                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20),
                   color: Colors.white,
                   child: ListView(
                     shrinkWrap: true,
@@ -354,6 +276,29 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  buildContainer(String url, String text) {
+    return Container(
+      width: 140,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Center(
+            child: CircleAvatar(backgroundImage: NetworkImage(url), radius: 45),
+          ),
+          Positioned(
+            width: 150,
+            bottom: 0,
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
       ),
     );
   }
