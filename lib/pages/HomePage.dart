@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:projeto_tela03/db/db_helper.dart';
 import 'package:projeto_tela03/db/propriedades_dao.dart';
 import 'package:projeto_tela03/domain/propriedades.dart';
+import 'package:projeto_tela03/pages/Google_maps.dart';
+
+import 'Google_maps.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -134,9 +138,21 @@ class _HomePageState extends State<HomePage> {
                       'Artigos',
                     ),
 
-                    buildContainer(
-                      'https://cdn-icons-png.flaticon.com/512/235/235861.png',
-                      'Mapa',
+                    InkWell(
+                      onTap: (){
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) {
+                                  return GoogleMapsPageState();
+                                }
+                            )
+                        );
+                      },
+                      child: buildContainer(
+                        'https://cdn-icons-png.flaticon.com/512/235/235861.png',
+                        'Mapa',
+                      ),
                     ),
                   ],
                 ),
