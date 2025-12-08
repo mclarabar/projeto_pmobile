@@ -140,11 +140,11 @@ class _HomePageState extends State<HomePage> {
 
                     InkWell(
                       onTap: (){
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) {
-                                  return GoogleMapsPageState();
+                                  return GoogleMapsPage(latLong: LatLng(-9.75164,  -36.6604));
                                 }
                             )
                         );
@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
 
               Flexible(
                 child: Container(
-                  height: 480,
+                  height: 570,
                   margin: EdgeInsets.all(20),
                   padding: EdgeInsets.all(20),
                   color: Colors.white,

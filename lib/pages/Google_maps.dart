@@ -22,21 +22,22 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
       appBar: AppBar(
         backgroundColor: Colors.indigo[900],
         title: Text(
-          'Mapa',
+          'MAPA',
           style: TextStyle(color: Colors.white, fontSize: 18),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.send),
+            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return HomePage();
-                  },
-                ),
-              );
+              Navigator.pop(context);
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) {
+              //       return HomePage();
+              //     },
+              //   ),
+              // );
             },
           ),
         ],
